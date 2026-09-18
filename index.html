@@ -34,6 +34,13 @@
   .hand{font-family:'Caveat',cursive;}
   img{max-width:100%;display:block;}
   .wrap{max-width:640px;margin:0 auto;padding:0 26px;position:relative;z-index:1;}
+  @media(min-width:900px){
+    .wrap{max-width:920px;}
+    .hero h1{font-size:2.9rem;max-width:640px;}
+    .hero .lead{max-width:580px;}
+    .problem h2{max-width:580px;}
+    .problem p{max-width:600px;}
+  }
   a{color:inherit;}
 
   .sticker-btn{
@@ -516,6 +523,22 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   car.addEventListener('mouseleave', resume);
   car.addEventListener('touchstart', pause, {passive:true});
   car.addEventListener('touchend', function(){ setTimeout(resume, 800); }, {passive:true});
+
+  // Scrolling the page with the mouse resting over the carousel doesn't fire
+  // mouseleave (no mousemove happens), which left it paused forever. Re-check
+  // the cursor position whenever the page scrolls and resume if it's not
+  // actually over the carousel anymore.
+  var lastMouseX = null, lastMouseY = null;
+  document.addEventListener('mousemove', function(e){
+    lastMouseX = e.clientX; lastMouseY = e.clientY;
+  }, {passive:true});
+  window.addEventListener('scroll', function(){
+    if(!isPaused || lastMouseX === null) return;
+    var rect = car.getBoundingClientRect();
+    var overCar = lastMouseX >= rect.left && lastMouseX <= rect.right &&
+                  lastMouseY >= rect.top && lastMouseY <= rect.bottom;
+    if(!overCar) resume();
+  }, {passive:true});
 })();
 
 (function(){
