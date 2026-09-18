@@ -76,19 +76,43 @@
   .hero{padding:56px 0 30px;}
   .tag{
     display:inline-block;
-    background:var(--paper-2);
+    background:var(--red);
+    color:#fff;
     border:2px solid var(--ink);
-    padding:5px 14px 6px;
+    padding:8px 18px 9px;
     border-radius:3px;
     transform:rotate(-2deg);
-    font-size:.85rem;
+    font-family:'Karla',sans-serif;
+    font-weight:800;
+    font-size:.92rem;
+    text-transform:uppercase;
+    letter-spacing:.2px;
     margin-bottom:24px;
     position:relative;
+    box-shadow:3px 3px 0 var(--ink);
+    animation:tag-pulse 1.6s ease-in-out infinite;
   }
   .tag::before{
     content:"";position:absolute;top:-8px;left:16px;width:26px;height:14px;
     background:rgba(232,169,18,.55);transform:rotate(-4deg);
   }
+  @keyframes tag-pulse{
+    0%,100%{box-shadow:3px 3px 0 var(--ink), 0 0 0 0 rgba(240,58,95,.45);}
+    50%{box-shadow:3px 3px 0 var(--ink), 0 0 0 9px rgba(240,58,95,0);}
+  }
+  .countdown{
+    display:inline-block;
+    background:var(--sun);
+    color:var(--ink);
+    font-family:'Karla',sans-serif;
+    font-weight:800;
+    font-size:.85rem;
+    padding:7px 16px;
+    border-radius:20px;
+    border:2px solid var(--ink);
+    margin:12px 0 24px;
+  }
+  .countdown strong{font-family:'Lilita One',sans-serif;font-size:1.05rem;color:var(--red-deep);}
   .hero h1{font-size:2.35rem;color:var(--ink);max-width:480px;}
   .circle-word{position:relative;white-space:nowrap;padding:0 4px;}
   .circle-word::after{
@@ -236,6 +260,12 @@
     .tags{flex-direction:row;align-items:stretch;}
     .pricetag{flex:1;}
   }
+
+  @media(max-width:599px){
+    .sprinkle{font-size:1.8rem;}
+    .problem .sprinkle:nth-of-type(1){top:2% !important;right:3% !important;}
+    .problem .sprinkle:nth-of-type(3){top:auto !important;bottom:3% !important;left:auto !important;right:6% !important;}
+  }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -258,7 +288,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
 <body>
 
 <div class="stickybar" id="stickybar">
-  <div class="sb-price">A partir de R$ 12,90<small>Pagamento único</small></div>
+  <div class="sb-price">A partir de R$ 14,90<small>Pagamento único</small></div>
   <a href="#oferta" class="sticker-btn">Ver os packs</a>
 </div>
 
@@ -269,7 +299,8 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   <span class="sprinkle" style="top:38%;right:3%;transform:rotate(-6deg);">🧩</span>
   <span class="sprinkle" style="bottom:2%;right:14%;transform:rotate(14deg);">🚂</span>
   <div class="wrap">
-    <span class="tag">Dia das Crianças chegando</span>
+    <span class="tag">⚠️ Dia das Crianças chegando! Não deixe pra última hora.</span>
+    <div class="countdown" id="countdown"></div>
     <h1>Brinquedo caro <span class="circle-word">não</span> é sinônimo de dia especial</h1>
     <div class="reel-wrap">
       <div class="reel" id="carousel">
@@ -313,7 +344,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   <span class="sprinkle" style="top:42%;left:12%;transform:rotate(-8deg);">🎲</span>
   <div class="wrap">
     <h2>Toda vez que a data chega, é a mesma correria</h2>
-    <p>Você entra na loja "só pra dar uma olhada" e sai de lá com o cartão gemendo e a sensação de que ainda não foi o suficiente.</p>
+    <p>Você entra na loja "só pra dar uma olhada" e sai de lá tendo gastado mais do que queria, com a sensação de que ainda não foi o suficiente.</p>
     <p>A pressão de comprar "o melhor presente" pesa no bolso — e no fim, a criança brinca dez minutos e esquece.</p>
     <p class="hand">Não precisa ser assim.</p>
   </div>
@@ -326,7 +357,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   <span class="sprinkle" style="bottom:6%;left:6%;transform:rotate(10deg);">🪀</span>
   <div class="wrap">
     <blockquote>E se o momento mais especial do Dia das Crianças <span>não viesse de uma prateleira</span>?</blockquote>
-    <p class="note">O eBook <strong>Dia das Crianças Criativo</strong> reúne ideias prontas de brincadeiras, presentes e decoração para famílias que querem criar memórias — sem estourar o orçamento.</p>
+    <p class="note">O Guia <strong>Dia das Crianças Criativo</strong> reúne ideias prontas de brincadeiras, presentes e decoração para famílias que querem criar memórias — sem estourar o orçamento.</p>
   </div>
 </section>
 
@@ -334,7 +365,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   <span class="sprinkle" style="top:2%;right:5%;transform:rotate(10deg);">🎯</span>
   <span class="sprinkle" style="bottom:3%;left:3%;transform:rotate(-10deg);">🖍️</span>
   <div class="wrap">
-    <h2>O que tem dentro do eBook</h2>
+    <h2>O que tem dentro do Guia</h2>
     <ul class="checklist">
       <li>
         <svg viewBox="0 0 24 24" fill="none"><path d="M4 13l5 5L20 6" stroke="#C6362A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -376,9 +407,9 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
       <div class="pricetag">
         <img src="img/pack-essencial.webp" alt="Pack Essencial - Dia das Crianças Criativo" class="pack-img" loading="lazy" width="800" height="800">
         <h3>Pack Essencial</h3>
-        <div class="amount">R$ 12,90</div>
+        <div class="amount">R$ 14,90</div>
         <ul>
-          <li>eBook Dia das Crianças Criativo completo</li>
+          <li>Guia Dia das Crianças Criativo completo</li>
           <li>Ideias de presentes criativos e baratos</li>
           <li>Faça você mesmo + decoração caseira</li>
           <li>Roteiro de um dia especial</li>
@@ -409,7 +440,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   <span class="sprinkle" style="bottom:4%;right:6%;transform:rotate(10deg);">⭐</span>
   <div class="wrap">
     <div class="stamp"><strong>7 dias</strong><span>de garantia</span></div>
-    <p>Se você achar que o eBook não é pra você, é só pedir reembolso em até 7 dias. Sem perguntas, sem burocracia.</p>
+    <p>Se você achar que o Guia não é pra você, é só pedir reembolso em até 7 dias. Sem perguntas, sem burocracia.</p>
   </div>
 </section>
 
@@ -446,7 +477,7 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   </div>
 </section>
 
-<footer>eBook Dia das Crianças Criativo · Este produto não é vinculado ao Facebook/Instagram/TikTok.</footer>
+<footer>Guia Dia das Crianças Criativo · Este produto não é vinculado ao Facebook/Instagram/TikTok.</footer>
 
 <script>
 (function(){
@@ -495,6 +526,23 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
     if(window.scrollY > trigger){ bar.classList.add('show'); }
     else{ bar.classList.remove('show'); }
   });
+})();
+
+(function(){
+  var el = document.getElementById('countdown');
+  if(!el) return;
+  var now = new Date();
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var target = new Date(now.getFullYear(), 9, 12);
+  if(target < today){ target = new Date(now.getFullYear() + 1, 9, 12); }
+  var days = Math.round((target - today) / 86400000);
+  if(days <= 0){
+    el.innerHTML = '🎉 <strong>Hoje</strong> é o Dia das Crianças!';
+  } else if(days === 1){
+    el.innerHTML = 'Falta <strong>1 dia</strong> para o Dia das Crianças';
+  } else {
+    el.innerHTML = 'Faltam <strong>' + days + ' dias</strong> para o Dia das Crianças';
+  }
 })();
 </script>
 </body>
