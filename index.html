@@ -497,48 +497,53 @@ src="https://www.facebook.com/tr?id=2147375836657082&ev=PageView&noscript=1"
   });
 
   var SPEED = 30;
-  var isPaused = false;
+  var touchPaused = false;
   var lastTs = null;
   var halfWidth = 0;
+  var lastMouseX = null, lastMouseY = null;
+  var scrollPos = 0;
 
   function computeHalfWidth(){ halfWidth = car.scrollWidth / 2; }
   computeHalfWidth();
   window.addEventListener('resize', computeHalfWidth);
 
+  // Mouse position is tracked separately and checked against the carousel's
+  // current position every animation frame, instead of relying on
+  // mouseenter/mouseleave: those don't fire when the page scrolls the
+  // carousel out from under a stationary cursor, which used to leave it
+  // paused forever.
+  document.addEventListener('mousemove', function(e){
+    lastMouseX = e.clientX; lastMouseY = e.clientY;
+  }, {passive:true});
+
+  function isHovering(){
+    if(lastMouseX === null) return false;
+    var rect = car.getBoundingClientRect();
+    return lastMouseX >= rect.left && lastMouseX <= rect.right &&
+           lastMouseY >= rect.top && lastMouseY <= rect.bottom;
+  }
+
   function tick(ts){
     if(!lastTs) lastTs = ts;
     var dt = (ts - lastTs) / 1000;
     lastTs = ts;
-    if(!isPaused){
-      car.scrollLeft += SPEED * dt;
-      if(car.scrollLeft >= halfWidth){ car.scrollLeft -= halfWidth; }
+    if(!touchPaused && !isHovering()){
+      // Accumulate in a plain JS float instead of reading scrollLeft back
+      // (the browser rounds it to whole pixels), otherwise sub-pixel
+      // per-frame increments get lost on high refresh-rate displays and
+      // the carousel never visibly moves.
+      scrollPos += SPEED * dt;
+      if(scrollPos >= halfWidth){ scrollPos -= halfWidth; }
+      car.scrollLeft = scrollPos;
+    } else {
+      scrollPos = car.scrollLeft;
     }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  function pause(){ isPaused = true; }
-  function resume(){ isPaused = false; lastTs = null; }
-  car.addEventListener('mouseenter', pause);
-  car.addEventListener('mouseleave', resume);
-  car.addEventListener('touchstart', pause, {passive:true});
-  car.addEventListener('touchend', function(){ setTimeout(resume, 800); }, {passive:true});
-
-  // Scrolling the page with the mouse resting over the carousel doesn't fire
-  // mouseleave (no mousemove happens), which left it paused forever. Re-check
-  // the cursor position whenever the page scrolls and resume if it's not
-  // actually over the carousel anymore.
-  var lastMouseX = null, lastMouseY = null;
-  document.addEventListener('mousemove', function(e){
-    lastMouseX = e.clientX; lastMouseY = e.clientY;
-  }, {passive:true});
-  window.addEventListener('scroll', function(){
-    if(!isPaused || lastMouseX === null) return;
-    var rect = car.getBoundingClientRect();
-    var overCar = lastMouseX >= rect.left && lastMouseX <= rect.right &&
-                  lastMouseY >= rect.top && lastMouseY <= rect.bottom;
-    if(!overCar) resume();
-  }, {passive:true});
+  car.addEventListener('touchstart', function(){ touchPaused = true; }, {passive:true});
+  car.addEventListener('touchend', function(){ setTimeout(function(){ touchPaused = false; lastTs = null; }, 800); }, {passive:true});
 })();
 
 (function(){
